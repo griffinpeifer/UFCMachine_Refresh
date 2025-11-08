@@ -1,5 +1,6 @@
-# UFCMachine_Copy
-Copy of UFC Machine
+# UFCMachine_Refresh
+Creating a new copy of UFC Machine to modernize and retrain the project with current data through 2025.
+
 
 # UFCMachine
 
