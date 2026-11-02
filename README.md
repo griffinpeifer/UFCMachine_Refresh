@@ -4,7 +4,7 @@ Creating a new copy of UFC Machine to modernize and retrain the project with cur
 
 # UFCMachine
 
-UFCMachine is a site which offers UFC fight predictions based on a deep learning model. The model is designed to predict the outcome of future fights based on the historical data from all UFC fights between 1993-2026, and allows users to input two fighters of their choosing using a backend dataset of UFC rostered fighters and their statistics.
+UFCMachine uses a deep learning model to predict UFC fight outcomes. The model is designed to predict the outcome of future fights based on the historical data from all UFC fights between 1993-2026, and allows users to input two fighters of their choosing using a backend dataset of UFC rostered fighters and their statistics.
 
 The model behind UFCMachine utilizes a Keras driven neural network with eight layers, and was trained using the difference in fight statistics between the winner and loser of each fight.
 
