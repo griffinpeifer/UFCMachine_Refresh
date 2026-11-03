@@ -2,7 +2,7 @@
 
 A UFC fight outcome predictor built on a deep learning neural network. Give it two fighters' names and it returns the probability that each one wins, based on how their career statistics compare.
 
-We built the original version in fall 2019 ([original repo](https://github.com/griffinpeifer/UFCMachine)): we found the historical fight data, scraped fighter stats from the web, cleaned and joined the two datasets, and trained a Keras neural network that reached **71.35% accuracy** on a held-out test set. This repo (`UFCMachine_Refresh`) is my own copy of that project, which I am modernizing and retraining on current data.
+To create the model, we found the historical fight data, scraped fighter stats from the web, cleaned and joined the two datasets, and trained a Keras neural network that reached **71.35% accuracy** on a held-out test set. This repo (`UFCMachine_Refresh`) is a copy of that project, which I am modernizing and retraining on current data.
 
 ## How it works, at a glance
 
