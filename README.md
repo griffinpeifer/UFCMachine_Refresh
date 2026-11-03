@@ -1,155 +1,127 @@
-# UFCMachine_Refresh
-Creating a new copy of UFC Machine to modernize and retrain the project with current data through 2026.
-
-
 # UFCMachine
 
-UFCMachine uses a deep learning model to predict UFC fight outcomes. The model is designed to predict the outcome of future fights based on the historical data from all UFC fights between 1993-2026, and allows users to input two fighters of their choosing using a backend dataset of UFC rostered fighters and their statistics.
+A UFC fight outcome predictor built on a deep learning neural network. Give it two fighters' names and it returns the probability that each one wins, based on how their career statistics compare.
 
-The model behind UFCMachine utilizes a Keras driven neural network with eight layers, and was trained using the difference in fight statistics between the winner and loser of each fight.
+We built the original version in fall 2019 ([original repo](https://github.com/griffinpeifer/UFCMachine)): we found the historical fight data, scraped fighter stats from the web, cleaned and joined the two datasets, and trained a Keras neural network that reached **71.35% accuracy** on a held-out test set. This repo (`UFCMachine_Refresh`) is my own copy of that project, which I am modernizing and retraining on current data.
 
-## Setup Instructions
-
-### 1. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 2. Scrape Fighter Data
-
-Run `UFC_scraping.ipynb` to scrape current fighter statistics from ufcstats.com. This will create `ufc_fighters_raw.csv`.
-
-### 3. Clean Fighter Data
-
-Run `UFC_Cleaning.ipynb` to clean and process the scraped fighter data. This will create `fighters_clean.csv`.
-
-### 4. Download Match Data
-
-You can create the match data by scraping from ufcstats.com:
-
-**Option A: Using the helper script (recommended)**
-```bash
-python download_match_data.py
-```
-or directly:
-```bash
-python scrape_ufc_matches.py
-```
-
-This will scrape all UFC fights from ufcstats.com and create `matches_clean.csv` with columns: `Red`, `Blue`, `Winner`, `Weight Class`.
-
-**Note:** This scraping process may take some time (30-60 minutes) depending on your internet connection, as it scrapes all UFC fights since 1993. The script will show progress and you can limit the number of fights for testing purposes.
-
-**Option B: Using the original repository (advanced)**
-If you want to use the original [UFC-Predictions repository](https://github.com/WarrierRajeev/UFC-Predictions) which has more detailed preprocessing:
-1. Clone the repository: `git clone https://github.com/WarrierRajeev/UFC-Predictions.git`
-2. Follow their instructions: `python -m src.create_ufc_data`
-3. Process the output to create `matches_clean.csv` with the required columns
-
-### 5. Train the Model
-
-Run `UFC_Machine_Learning_Model.ipynb` to train the neural network model. The trained model will be saved as `ufc_prediction_model.h5`.
-
-## Approach
-
-After finding the dataset https://www.kaggle.com/rajeevw/ufcdata containing all UFC fights since 1993, we created a predictive model which provides the most probable winner based on which statistics were most highly correlated to winning past matches.
-
-### Scraping
--------------
-In order to predict future fights based on searching fighter names instead of statistics, we scrape the career stats for every fighter on the UFC roster from http://ufcstats.com/statistics/fighters. These stats include career statistics such as fight record, height, weight, reach, significant strikes landed per minute, and more for each fighter's name. This scraping method can be seen in `UFC_scraping.ipynb`.
-
-![df_fighters](https://github.com/griffinpeifer/UFCMachine/blob/master/df_fighters.PNG)
-
-Cleaning
-------------
-Once all fighters and their career stats were input into a dataframe, the data was cleaned and all fighters who had missing data fields were eliminated from the dataset, yielding 1672 fighters. This was an acceptable refinement because the fighters who were missing data tended to be older, retired fighters, and as a result they won't have much applicability to a future fight predictor. 
-
-![df_matches with names](https://github.com/griffinpeifer/UFCMachine/blob/master/df_matches_names.PNG)
-
-A value of 1 in the 'result' column indicates a win by the 'Red' fighter.
-
-![df_matches with stat differential](https://github.com/griffinpeifer/UFCMachine/blob/master/df_matches_differential.PNG)
-
-### Model Development
--------------
-Once the dataset was scraped and cleaned, we use it to enhance the df_matches dataframe, which contains the winning and losing fighters from all matches since 1993. By replacing the fighters' names in this dataframe with their career stats, we calculate a stat differential between the two fighters in each match, and train our model to learn which statistical categories are most highly correlated with winning. This can be seen in the `UFC_Machine_Learning_Model.ipynb` file.
-
-Using the updated df_matches, an eight-layer neural network was developed which achieved 71.35% test accuracy and is used as a viable prediction model for future fights.
-
-## Project Structure
+## How it works, at a glance
 
 ```
-UFCMachine_Refresh/
-├── UFC_scraping.ipynb              # Scrape fighter stats from ufcstats.com
-├── UFC_Cleaning.ipynb              # Clean and process fighter data
-├── UFC_Machine_Learning_Model.ipynb # Train the neural network model
-├── scrape_ufc_matches.py           # Script to scrape fight data from ufcstats.com
-├── download_match_data.py          # Helper script to create match data (uses scraper)
-├── predict_fight.py                # Helper script to predict fight outcomes
-├── requirements.txt                # Python dependencies
-├── .gitignore                      # Git ignore file for generated data
-└── README.md                       # This file
+ufcstats.com fighter pages ──scrape──► raw fighter stats ──clean──► fighters_clean.csv ─┐
+                                                                                         ├─► stat differences ─► neural network ─► P(win)
+Kaggle UFC fight history (1993–2019) ──────────────────────────────► matches_clean.csv ─┘
 ```
 
-## Data Files (Generated)
+The core idea: a fight is described by the **difference** between the two fighters' stats (Red minus Blue), and the model learns which differences tend to predict a win.
 
-- `ufc_fighters_raw.csv` - Raw scraped fighter data
-- `fighters_clean.csv` - Cleaned fighter statistics
-- `matches_clean.csv` - Historical UFC match data (from Kaggle)
-- `ufc_prediction_model.h5` - Trained model file
-- `scaler.pkl` - Scaler used for feature normalization (saved during training)
+---
 
-## Usage
+## 1. Finding the data
 
-After training the model, you can use it to predict fight outcomes:
+We needed two kinds of data:
 
-### Using the Prediction Script
+| Need | Source | What it gave us |
+|---|---|---|
+| Who fought whom, and who won | Kaggle: [UFC-Fight historical data 1993–2019](https://www.kaggle.com/rajeevw/ufcdata) | Every UFC fight since 1993, with the Red and Blue corner fighters, the winner and the weight class |
+| What each fighter is like | [ufcstats.com](http://ufcstats.com/statistics/fighters) (the UFC's official stats site) | Career stats for every fighter on record |
 
-The easiest way to make predictions is using the provided script:
+The Kaggle dataset is what got the project started: once we had every UFC fight result since 1993, the question became which fighter statistics best separate winners from losers. We reduced it to the four columns we needed (`Red`, `Blue`, `Winner`, `Weight Class`) and saved it as `matches_clean.csv`.
 
-```bash
-python predict_fight.py "Fighter 1 Name" "Fighter 2 Name"
-```
+To let someone predict a fight by typing in fighter **names** rather than raw numbers, we also needed a lookup table of stats for every fighter, so we built our own scraper for ufcstats.com.
 
-Example:
-```bash
-python predict_fight.py "Khabib Nurmagomedov" "Tony Ferguson"
-```
+## 2. Scraping fighter stats (`UFC_scraping.ipynb`)
 
-### Using Python Code
+- Used **Splinter + Selenium (ChromeDriver)** to load the ufcstats.com fighter listing and **BeautifulSoup** to parse it.
+- Collected each fighter's profile link from the listing table and de-duplicated them (each row links the same fighter several times).
+- Visited every profile with a `requests` session and pulled:
+  - **Name, nickname and record** (W-L-D) from the page header
+  - **Physical attributes:** height, weight, reach, stance, date of birth
+  - **Career stats:** significant strikes landed per minute (SLpM), striking accuracy, strikes absorbed per minute (SApM), striking defense, takedown average, takedown accuracy, takedown defense, submission average
+- Stored each fighter as a dictionary keyed by the stat labels on the page, then saved the full roster to CSV (roughly 3,400 fighters).
 
-You can also use the model programmatically:
+![df_fighters](https://github.com/griffinpeifer/UFCMachine/blob/master/df_fighters.PNG?raw=true)
+
+## 3. Cleaning (`UFC_Cleaning.ipynb`)
+
+Everything scraped from the site came back as text (`6' 3"`, `235 lbs.`, `58%`, `Sep 02, 1981`), so cleaning was mostly turning it into numbers the model could use:
+
+| Field | Raw value | Cleaned value |
+|---|---|---|
+| Record | `20-5-0` | Split into `Wins`, `Losses`, `Draws`, plus a new **Win Percentage** = wins ÷ total fights |
+| Height | `6' 3"` | Split on feet/inches and converted to decimal feet → `6.25` |
+| Weight | `235 lbs.` | `235` |
+| Reach | `76"` | `76` |
+| Date of birth | `Sep 02, 1981` | Parsed to a date and converted to **Age** in years (with a fix for two-digit years that parsed into the future) |
+| Str. Acc., Str. Def., TD Acc., TD Def. | `58%` | `0.58` |
+| Nickname | blank | `No Name` |
+
+We also dropped columns the model wouldn't use (stance, the raw record string, the CSV index).
+
+**Handling missing data:** many fighters had no height, reach, date of birth or striking stats on file (shown as `--` on the site). We removed every fighter with a missing field, which left **1,672 fighters**. That was an acceptable trade-off: the fighters with missing data were mostly older, retired fighters with short careers, so they matter little for predicting future fights.
+
+The cleaned table is saved as `fighters_clean.csv`.
+
+## 4. Building the training set (`UFC_Machine_Learning_Model.ipynb`)
+
+1. **Feature set:** 14 stats per fighter: height, weight, reach, age, SLpM, striking accuracy, SApM, striking defense, takedown average, takedown accuracy, takedown defense, submission average, win percentage and total fights (a feature we added as wins + losses + draws, to capture experience).
+2. **Label:** for each fight, `result = 1` if the Red-corner fighter won, `0` if Blue won.
+3. **Joining the datasets:** kept only fights where *both* fighters were in our cleaned fighter table, so every fight had complete stats.
+4. **Stat differential:** replaced each fight's two fighter names with the difference between their stats (Red − Blue) for all 14 features. This turns every fight into one row of 14 numbers plus the result.
+
+The final training set had **4,386 fights** (2,763 Red wins, 1,623 Blue wins), saved as `training_model.csv`.
+
+![df_matches with names](https://github.com/griffinpeifer/UFCMachine/blob/master/df_matches_names.PNG?raw=true)
+
+![df_matches with stat differential](https://github.com/griffinpeifer/UFCMachine/blob/master/df_matches_differential.PNG?raw=true)
+
+## 5. Training the model
+
+- **Split:** 70% train / 30% test (`train_test_split`, `random_state=0`).
+- **Scaling:** `StandardScaler` fit on the training set only, then applied to the test set, so every feature is on the same scale.
+- **Architecture:** a Keras `Sequential` network with **eight hidden layers**:
+
+  | Layer | Units | Activation |
+  |---|---|---|
+  | Hidden 1 | 16 | ReLU |
+  | Hidden 2–7 | 32 each | ReLU |
+  | Hidden 8 | 16 | ReLU |
+  | Output | 1 | Sigmoid (probability Red wins) |
+
+  Every hidden layer uses **L2 regularization (0.01)** to limit overfitting.
+- **Training:** binary cross-entropy loss, Adam optimizer, 200 epochs, batch size 64.
+- **Result:** **71.35% accuracy on the held-out test set.**
+
+## 6. Making predictions
+
+To predict a fight, the model looks up both fighters in `fighters_clean.csv`, takes the difference in their 14 stats, scales it with the same scaler used in training, and outputs the probability that the first fighter wins.
 
 ```python
-from tensorflow.keras.models import load_model
-import pandas as pd
-import pickle
-
-# Load the model, scaler, and fighter data
-model = load_model('ufc_prediction_model.h5')
-with open('scaler.pkl', 'rb') as f:
-    scaler = pickle.load(f)
-df_fighters = pd.read_csv('fighters_clean.csv', index_col='Name')
-
-# Predict a fight
-def predict_fight(fighter1, fighter2):
-    stats = [col for col in df_fighters.columns 
-            if df_fighters[col].dtype in ['int64', 'float64']]
-    data1 = df_fighters.loc[fighter1, stats]
-    data2 = df_fighters.loc[fighter2, stats]
-    data_diff = (data1 - data2).values.reshape(1, -1)
-    data_diff_scaled = scaler.transform(data_diff)
-    prediction = model.predict(data_diff_scaled, verbose=0)
-    return prediction[0][0]
-
-# Example
-probability = predict_fight("Khabib Nurmagomedov", "Tony Ferguson")
-print(f"Probability of fighter 1 winning: {probability:.2%}")
+print(predict(model, "Khabib Nurmagomedov", "Tony Ferguson"))
+# [[0.698]]  -> about 70% Khabib
 ```
 
-## Notes
+**Removing corner bias:** because the model was trained on Red-minus-Blue differences, swapping the order of the two fighters doesn't always give exactly mirrored probabilities. To get one consistent answer, we ran the matchup both ways and averaged:
 
-- The scraping process may take some time as it respects rate limits
-- Make sure fighter names in match data match exactly with names in the fighter database
-- The model accuracy may vary based on the quality and recency of the training data
+```python
+fight1 = predict(model, "Gregor Gillespie", "Kevin Lee")   # 0.638
+fight2 = predict(model, "Kevin Lee", "Gregor Gillespie")   # 0.445
+fighter1_win = (fight1 + (1 - fight2)) / 2                  # 0.596 -> Gillespie ~60%
+```
+
+The original model powered a small **Flask** website where users could choose any two rostered fighters and see the prediction.
+
+## Tools used
+
+Python, pandas, NumPy, BeautifulSoup, Splinter/Selenium, requests, scikit-learn, Keras (TensorFlow backend), Jupyter, Flask.
+
+## Repository contents
+
+| File | Purpose |
+|---|---|
+| `UFC_scraping.ipynb` | Scrapes fighter profiles from ufcstats.com |
+| `UFC_Cleaning.ipynb` | Cleans and converts the scraped fighter stats |
+| `UFC_Machine_Learning_Model.ipynb` | Builds the stat-differential training set, trains and evaluates the network, makes predictions |
+| `scrape_ufc_matches.py`, `ufc_predictor.py`, `requirements.txt` | Added in my refresh: updated scraper, reusable prediction module and dependencies |
+| `archive/` | Helper and debug scripts from my refresh |
+
+Generated data and model files (`*.csv`, `*.h5`, `scaler.pkl`) are not committed; running the notebooks in order (scraping → cleaning → model) recreates them.
