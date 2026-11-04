@@ -110,9 +110,62 @@ fighter1_win = (fight1 + (1 - fight2)) / 2                  # 0.596 -> Gillespie
 
 The original model powered a small **Flask** website where users could choose any two rostered fighters and see the prediction.
 
+---
+
+## 7. The 2026 refresh: data through 2026
+
+The original data stopped in 2019, so I rebuilt the pipeline to bring in every UFC fight through 2026 and keep it current. This happened in two stages.
+
+### Stage 1: scraping ufcstats.com directly (early 2026)
+
+- **Fighter scraper:** rewrote `UFC_scraping.ipynb` to use `requests` + BeautifulSoup in place of Selenium/ChromeDriver.
+- **Fight-history scraper (`scrape_ufc_matches.py`):** replaced the 2019 Kaggle file by scraping every completed event and bout from ufcstats.com myself, producing an up-to-date `matches_clean.csv` (`Red`, `Blue`, `Winner`, `Weight Class`).
+- **Cleaning fixes:** corrected record parsing, height/reach/weight conversion and the age calculation.
+- **Model code:** moved the notebook to TensorFlow 2.x and pulled the prediction logic into a reusable module, `ufc_predictor.py`, with handling for fighters who share a name.
+
+### Stage 2: switching data sources and rebuilding the training set (fall 2026)
+
+In September 2026 ufcstats.com started serving a browser check that blocks scripts, so the scrapers could no longer pull data. I switched to the public [Greco1899/scrape_ufc_stats](https://github.com/Greco1899/scrape_ufc_stats) dataset, which mirrors ufcstats.com and is updated almost daily, and wrote `scripts/build_from_greco.py` to turn it into the files the model uses:
+
+- **Career stats from round-by-round data:** SLpM, striking accuracy, SApM, striking defense, takedown average/accuracy/defense and submission average are computed from per-round fight totals using ufcstats.com's own definitions, instead of being read off fighter pages.
+- **Name matching:** some fighters are spelled differently on their profile than on fight cards (`Waldo Cortes-Acosta` vs `Waldo Cortes Acosta`, `Levi Rodrigues` vs `Levi Rodrigues Jr.`). The build normalizes accents, punctuation and suffixes and maps profiles to the fight-card spelling, so predictions work with the names on the card.
+- **Missing data:** fighters who appear in fights but have no profile still get a row, so their fights aren't dropped; missing weight or reach stays blank rather than 0 (a 0 created fake 70-inch reach gaps); a small `height_overrides.csv` fills in heights the site lists as `--`.
+- **Point-in-time features:** the original approach used each fighter's *current* career stats, which already include the fight being predicted. The rebuilt training set (`training_pit.csv`) computes every fight's features from **only the UFC fights before it**: record, win percentage, total fights, striking and grappling rates, and age on fight night.
+- **Corner order:** draws and no-contests are excluded, and Red/Blue order is randomized per fight (seeded, so it's reproducible) so the model can't learn which corner tends to win. The red-corner win rate drops to about 51%.
+- **Freshness check:** the build stops if the newest event in the dataset is more than 45 days old, so a stalled source never silently produces a stale model.
+
+The result covers **8,768 decided fights from March 1994 through October 2026**, with **4,635 fighters** in the lookup table.
+
+### Retraining and evaluation (`scripts/train_model.py`)
+
+- **Time-based test set:** train on everything up to 12 months ago and test on the most recent 12 months of fights, which the model never sees. This mirrors how the model is actually used: predicting fights that haven't happened yet.
+- **Model comparison:** the original eight-hidden-layer network is trained alongside a logistic regression and three smaller networks (3 layers, 3 layers with dropout, and a wider 3-layer net). Each uses early stopping on the most recent 15% of the training period.
+- **Calibration:** raw network probabilities were overconfident, so each model gets a temperature scale fit on the validation fights, and predictions are averaged across both corner orders (the same trick as the original).
+- **Model selection:** the model with the lowest test log-loss is saved as `ufc_model_best.h5`; then every model is retrained on all fights for live use.
+
+Latest results (trained through Oct 2025, tested on 553 fights from Oct 2025 to Oct 2026):
+
+| Model | Test accuracy | Log-loss |
+|---|---|---|
+| Baseline: pick the fighter with the better UFC win % | 56.2% | n/a |
+| Logistic regression (selected as best) | 61.3% | 0.644 |
+| 3-layer network | 61.8% | 0.646 |
+| 3-layer network + dropout | 60.9% | 0.649 |
+| Wide 3-layer network | 62.0% | 0.647 |
+| Original 8-hidden-layer network | 47.7% | 0.693 |
+
+On this cleaner, time-ordered data the deep original network collapses to predicting about 50% for everything, while simpler models do best. When the selected model is at least 65% confident, it is right about 74% of the time.
+
+### Keeping it current
+
+- **Monthly refresh (`scripts/monthly_refresh.sh`):** a macOS `launchd` job pulls the latest dataset, rebuilds the data, retrains every model and writes `model_metrics.txt`. It backs up the previous data and models first and restores them if any step fails.
+- **Live tracking (`scripts/track_predictions.py`):** before each card I log the model's picks, then score them against the real results afterwards. The running tally is in `tracking/scorecard.md`.
+
 ## Tools used
 
-Python, pandas, NumPy, BeautifulSoup, Splinter/Selenium, requests, scikit-learn, Keras (TensorFlow backend), Jupyter, Flask.
+**Original:** Python, pandas, NumPy, BeautifulSoup, Splinter/Selenium, requests, scikit-learn, Keras (TensorFlow backend), Jupyter, Flask.
+
+**Refresh:** TensorFlow 2.x / Keras, scikit-learn, pandas, requests, Bash, macOS launchd.
 
 ## Repository contents
 
@@ -121,7 +174,13 @@ Python, pandas, NumPy, BeautifulSoup, Splinter/Selenium, requests, scikit-learn,
 | `UFC_scraping.ipynb` | Scrapes fighter profiles from ufcstats.com |
 | `UFC_Cleaning.ipynb` | Cleans and converts the scraped fighter stats |
 | `UFC_Machine_Learning_Model.ipynb` | Builds the stat-differential training set, trains and evaluates the network, makes predictions |
-| `scrape_ufc_matches.py`, `ufc_predictor.py`, `requirements.txt` | Added in my refresh: updated scraper, reusable prediction module and dependencies |
-| `archive/` | Helper and debug scripts from my refresh |
+| `scrape_ufc_matches.py` | Refresh stage 1: scrapes every UFC fight result from ufcstats.com |
+| `ufc_predictor.py` | Reusable prediction module (loads the best model, scaler and calibration) |
+| `scripts/build_from_greco.py` | Refresh stage 2: builds fighter stats and point-in-time training data from the Greco1899 dataset |
+| `scripts/train_model.py` | Time-based evaluation, model comparison, calibration and retraining |
+| `scripts/monthly_refresh.sh` | Monthly download → build → retrain job, with backups |
+| `scripts/track_predictions.py` | Logs pre-fight picks and scores them against results |
+| `requirements.txt` | Dependencies |
+| `archive/` | Helper and debug scripts from stage 1 of the refresh |
 
-Generated data and model files (`*.csv`, `*.h5`, `scaler.pkl`) are not committed; running the notebooks in order (scraping → cleaning → model) recreates them.
+Generated data and model files (`*.csv`, `*.h5`, `scaler.pkl`) are not committed. To rebuild them, clone the Greco1899 dataset into `data/scrape_ufc_stats/` and run `scripts/build_from_greco.py`, then `scripts/train_model.py`.
