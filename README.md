@@ -159,7 +159,7 @@ On this cleaner, time-ordered data the deep original network collapses to predic
 ### Keeping it current
 
 - **Monthly refresh (`scripts/monthly_refresh.sh`):** a macOS `launchd` job pulls the latest dataset, rebuilds the data, retrains every model and writes `model_metrics.txt`. It backs up the previous data and models first and restores them if any step fails.
-- **Live tracking (`scripts/track_predictions.py`):** before each card I log the model's picks, then score them against the real results afterwards. The running tally is in `tracking/scorecard.md`.
+- **Live tracking (`scripts/track_predictions.py`):** before each card I log the model's picks, then score them against the real results afterwards. The log and running tally are kept locally in `tracking/` (not committed).
 
 ## Tools used
 

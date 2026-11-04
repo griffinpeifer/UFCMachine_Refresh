@@ -42,3 +42,6 @@ data/
 
 # Logs
 *.log
+
+# Local prediction tracking
+tracking/
