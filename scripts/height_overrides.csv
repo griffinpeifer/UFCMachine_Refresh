@@ -1,0 +1,8 @@
+# Heights for fighters that ufcstats.com lists as "--".
+# Only applied when the dataset has no height for that fighter.
+# Add a row whenever a prediction comes back "unable to predict" because of a missing height.
+# Verify values against the UFC athlete page or Tapology before relying on them.
+Name,HeightInches
+Gable Steveson,73
+Xiong Jingnan,67
+Yi Sak Lee,70

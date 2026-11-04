@@ -1,0 +1,66 @@
+event,event_date,fighter_a,fighter_b,pick,confidence,model,logged_at,winner,method,correct
+UFC 332: Silva vs. Wang,2026-10-03,Natalia Silva,Wang Cong,Natalia Silva,0.6,"point-in-time logistic, built Oct 2 (data thru 2026-09-26)",2026-10-02 22:50,Natalia Silva,Decision - Unanimous,True
+UFC 332: Silva vs. Wang,2026-10-03,Deiveson Figueiredo,Payton Talbott,Payton Talbott,0.76,"point-in-time logistic, built Oct 2 (data thru 2026-09-26)",2026-10-02 22:50,Payton Talbott,KO/TKO,True
+UFC 332: Silva vs. Wang,2026-10-03,King Green,Esteban Ribovics,Esteban Ribovics,0.58,"point-in-time logistic, built Oct 2 (data thru 2026-09-26)",2026-10-02 22:50,Esteban Ribovics,KO/TKO,True
+UFC 332: Silva vs. Wang,2026-10-03,Roberto Soldic,Khaos Williams,Khaos Williams,0.58,"point-in-time logistic, built Oct 2 (data thru 2026-09-26)",2026-10-02 22:50,Roberto Soldic,Decision - Unanimous,False
+UFC 332: Silva vs. Wang,2026-10-03,Ateba Gautier,Roman Kopylov,Ateba Gautier,0.79,"point-in-time logistic, built Oct 2 (data thru 2026-09-26)",2026-10-02 22:50,Roman Kopylov,KO/TKO,False
+UFC 332: Silva vs. Wang,2026-10-03,Imanol Rodriguez,Alden Coria,Alden Coria,0.51,"point-in-time logistic, built Oct 2 (data thru 2026-09-26)",2026-10-02 22:50,Imanol Rodriguez,KO/TKO,False
+UFC 332: Silva vs. Wang,2026-10-03,Damian Pinas,Andrey Pulyaev,Damian Pinas,0.65,"point-in-time logistic, built Oct 2 (data thru 2026-09-26)",2026-10-02 22:50,Damian Pinas,KO/TKO,True
+UFC 332: Silva vs. Wang,2026-10-03,Marcus McGhee,Anthony Romero,Marcus McGhee,0.53,"point-in-time logistic, built Oct 2 (data thru 2026-09-26)",2026-10-02 22:50,Marcus McGhee,KO/TKO,True
+UFC 332: Silva vs. Wang,2026-10-03,Anthony Wint,Lucas Armand,Anthony Wint,0.73,"point-in-time logistic, built Oct 2 (data thru 2026-09-26)",2026-10-02 22:50,Anthony Wint,KO/TKO,True
+UFC 332: Silva vs. Wang,2026-10-03,Johnny Walker,Mick Parkin,Mick Parkin,0.64,"point-in-time logistic, built Oct 2 (data thru 2026-09-26)",2026-10-02 22:50,Johnny Walker,KO/TKO,False
+UFC 332: Silva vs. Wang,2026-10-03,Jacobe Smith,Bruce Whitehead,Jacobe Smith,0.75,"point-in-time logistic, built Oct 2 (data thru 2026-09-26)",2026-10-02 22:50,Jacobe Smith,KO/TKO,True
+UFC 332: Silva vs. Wang,2026-10-03,Rafael Dos Anjos,Alexander Hernandez,Alexander Hernandez,0.6,"point-in-time logistic, built Oct 2 (data thru 2026-09-26)",2026-10-02 22:50,Alexander Hernandez,KO/TKO,True
+UFC 332: Silva vs. Wang,2026-10-03,Marvin Vettori,Ismail Naurdiev,Ismail Naurdiev,0.63,"point-in-time logistic, built Oct 2 (data thru 2026-09-26)",2026-10-02 22:50,Ismail Naurdiev,Decision - Unanimous,True
+UFC 332: Silva vs. Wang,2026-10-03,Court McGee,Eric Nolan,Eric Nolan,0.63,"point-in-time logistic, built Oct 2 (data thru 2026-09-26)",2026-10-02 22:50,Eric Nolan,KO/TKO,True
+UFC Fight Night: Allen vs. Duncan,2026-10-10,Brendan Allen,Christian Leroy Duncan,Christian Leroy Duncan,0.553,"point-in-time logistic, built Oct 7 (data thru 2026-10-03)",2026-10-07 12:40,Brendan Allen,Submission,False
+UFC Fight Night: Allen vs. Duncan,2026-10-10,Matheus Camilo,Jai Herbert,Matheus Camilo,0.731,"point-in-time logistic, built Oct 7 (data thru 2026-10-03)",2026-10-07 12:40,Jai Herbert,Decision - Unanimous,False
+UFC Fight Night: Allen vs. Duncan,2026-10-10,Loopy Godinez,Ketlen Souza,Loopy Godinez,0.539,"point-in-time logistic, built Oct 7 (data thru 2026-10-03)",2026-10-07 12:40,Loopy Godinez,Decision - Unanimous,True
+UFC Fight Night: Allen vs. Duncan,2026-10-10,Andre Fili,Kai Kamaka III,Andre Fili,0.604,"point-in-time logistic, built Oct 7 (data thru 2026-10-03)",2026-10-07 12:40,Andre Fili,KO/TKO,True
+UFC Fight Night: Allen vs. Duncan,2026-10-10,Gerald Meerschaert,Julius Walker,Julius Walker,0.738,"point-in-time logistic, built Oct 7 (data thru 2026-10-03)",2026-10-07 12:40,Julius Walker,KO/TKO,True
+UFC Fight Night: Allen vs. Duncan,2026-10-10,Malcolm Wellmaker,Otari Tanzilovi,Otari Tanzilovi,0.569,"point-in-time logistic, built Oct 7 (data thru 2026-10-03)",2026-10-07 12:40,Otari Tanzilovi,KO/TKO,True
+UFC Fight Night: Allen vs. Duncan,2026-10-10,Ismael Bonfim,Francisco Prado,Francisco Prado,0.568,"point-in-time logistic, built Oct 7 (data thru 2026-10-03)",2026-10-07 12:40,Francisco Prado,KO/TKO,True
+UFC Fight Night: Allen vs. Duncan,2026-10-10,Niko Price,Leon Shahbazyan,Niko Price,0.796,"point-in-time logistic, built Oct 7 (data thru 2026-10-03)",2026-10-07 12:40,Niko Price,KO/TKO,True
+UFC Fight Night: Allen vs. Duncan,2026-10-10,Felipe Franco,Brendson Ribeiro,Felipe Franco,0.661,"point-in-time logistic, built Oct 7 (data thru 2026-10-03)",2026-10-07 12:40,Brendson Ribeiro,Submission,False
+UFC Fight Night: Allen vs. Duncan,2026-10-10,RJ Harris,Allen Frye Jr.,RJ Harris,0.657,"point-in-time logistic, built Oct 7 (data thru 2026-10-03)",2026-10-07 12:40,Allen Frye Jr.,KO/TKO,False
+UFC Fight Night: Allen vs. Duncan,2026-10-10,Alice Pereira,Daria Zhelezniakova,Alice Pereira,0.698,"point-in-time logistic, built Oct 7 (data thru 2026-10-03)",2026-10-07 12:40,Alice Pereira,KO/TKO,True
+UFC Fight Night: Allen vs. Duncan,2026-10-10,Melissa Gatto,Ernesta Kareckaite,Melissa Gatto,0.53,"point-in-time logistic, built Oct 7 (data thru 2026-10-03)",2026-10-07 12:40,Draw,Decision - Majority,
+UFC Fight Night: Buckley vs. Malott,2026-10-17,Joaquin Buckley,Mike Malott,Joaquin Buckley,0.529,weekly point-in-time logistic (data thru 2026-10-10),2026-10-14 09:06,Mike Malott,KO/TKO,False
+UFC Fight Night: Buckley vs. Malott,2026-10-17,Erin Blanchfield,Jasmine Jasudavicius,Erin Blanchfield,0.693,weekly point-in-time logistic (data thru 2026-10-10),2026-10-14 09:06,Jasmine Jasudavicius,Decision - Unanimous,False
+UFC Fight Night: Buckley vs. Malott,2026-10-17,Kyle Nelson,Cristian Perez,Cristian Perez,0.534,weekly point-in-time logistic (data thru 2026-10-10),2026-10-14 09:06,Cristian Perez,KO/TKO,True
+UFC Fight Night: Buckley vs. Malott,2026-10-17,Marc-Andre Barriault,Kyle Daukaus,Kyle Daukaus,0.626,weekly point-in-time logistic (data thru 2026-10-10),2026-10-14 09:06,Marc-Andre Barriault,KO/TKO,False
+UFC Fight Night: Buckley vs. Malott,2026-10-17,Louis Jourdain,Timmy Cuamba,Timmy Cuamba,0.69,weekly point-in-time logistic (data thru 2026-10-10),2026-10-14 09:06,Timmy Cuamba,Submission,True
+UFC Fight Night: Buckley vs. Malott,2026-10-17,Mandel Nallo,Nate Landwehr,Nate Landwehr,0.633,weekly point-in-time logistic (data thru 2026-10-10),2026-10-14 09:06,Mandel Nallo,KO/TKO,False
+UFC Fight Night: Buckley vs. Malott,2026-10-17,Tanner Boser,Jhonata Diniz,Jhonata Diniz,0.575,weekly point-in-time logistic (data thru 2026-10-10),2026-10-14 09:06,Tanner Boser,KO/TKO,False
+UFC Fight Night: Buckley vs. Malott,2026-10-17,Julien Leblanc,Nicholas Galanti,Nicholas Galanti,0.603,weekly point-in-time logistic (data thru 2026-10-10),2026-10-14 09:06,,,
+UFC Fight Night: Buckley vs. Malott,2026-10-17,Javad Mahjoub,Joel Faglier,Joel Faglier,0.66,weekly point-in-time logistic (data thru 2026-10-10),2026-10-14 09:06,Joel Faglier,KO/TKO,True
+UFC Fight Night: Buckley vs. Malott,2026-10-17,Katlyn Cerminara,Mackenzie Stiller,Mackenzie Stiller,0.538,weekly point-in-time logistic (data thru 2026-10-10),2026-10-14 09:06,Katlyn Cerminara,KO/TKO,False
+UFC Fight Night: Buckley vs. Malott,2026-10-17,Chad Anheliger,Steven Koslow,Steven Koslow,0.649,weekly point-in-time logistic (data thru 2026-10-10),2026-10-14 09:06,Steven Koslow,Submission,True
+UFC Fight Night: Buckley vs. Malott,2026-10-17,Melissa Croden,Chelsea Chandler,Melissa Croden,0.65,weekly point-in-time logistic (data thru 2026-10-10),2026-10-14 09:06,Chelsea Chandler,Submission,False
+UFC Fight Night: Buckley vs. Malott,2026-10-17,Cody Chovancek,SuYoung You,SuYoung You,0.651,weekly point-in-time logistic (data thru 2026-10-10),2026-10-14 09:06,SuYoung You,Submission,True
+UFC 333: Volkanovski vs. Evloev,2026-10-24,Alexander Volkanovski,Movsar Evloev,Movsar Evloev,0.668,weekly point-in-time logistic (data thru 2026-10-17),2026-10-21 03:41,Alexander Volkanovski,KO/TKO,False
+UFC 333: Volkanovski vs. Evloev,2026-10-24,Petr Yan,Merab Dvalishvili,Merab Dvalishvili,0.571,weekly point-in-time logistic (data thru 2026-10-17),2026-10-21 03:41,Petr Yan,Decision - Unanimous,False
+UFC 333: Volkanovski vs. Evloev,2026-10-24,Lone'er Kavanagh,Ramazan Temirov,Lone'er Kavanagh,0.514,weekly point-in-time logistic (data thru 2026-10-17),2026-10-21 03:41,Lone'er Kavanagh,KO/TKO,True
+UFC 333: Volkanovski vs. Evloev,2026-10-24,Alexander Volkov,Rizvan Kuniev,Alexander Volkov,0.518,weekly point-in-time logistic (data thru 2026-10-17),2026-10-21 03:41,Alexander Volkov,Decision - Unanimous,True
+UFC 333: Volkanovski vs. Evloev,2026-10-24,Aaron Pico,Losene Keita,Aaron Pico,0.557,weekly point-in-time logistic (data thru 2026-10-17),2026-10-21 03:41,Aaron Pico,KO/TKO,True
+UFC 333: Volkanovski vs. Evloev,2026-10-24,Azamat Murzakanov,Dominick Reyes,Dominick Reyes,0.545,weekly point-in-time logistic (data thru 2026-10-17),2026-10-21 03:41,Dominick Reyes,KO/TKO,True
+UFC 333: Volkanovski vs. Evloev,2026-10-24,Nikita Krylov,Abdul Rakhman Yakhyaev,Abdul Rakhman Yakhyaev,0.83,weekly point-in-time logistic (data thru 2026-10-17),2026-10-21 03:41,Abdul Rakhman Yakhyaev,KO/TKO,True
+UFC 333: Volkanovski vs. Evloev,2026-10-24,Abus Magomedov,Cam Rowston,Cam Rowston,0.694,weekly point-in-time logistic (data thru 2026-10-17),2026-10-21 03:41,Abus Magomedov,Submission,False
+UFC 333: Volkanovski vs. Evloev,2026-10-24,Grant Dawson,Nurullo Aliev,Nurullo Aliev,0.659,weekly point-in-time logistic (data thru 2026-10-17),2026-10-21 03:41,Grant Dawson,Decision - Unanimous,False
+UFC 333: Volkanovski vs. Evloev,2026-10-24,Colby Thicknesse,Asaf Chopurov,Colby Thicknesse,0.601,weekly point-in-time logistic (data thru 2026-10-17),2026-10-21 03:41,Colby Thicknesse,Decision - Split,True
+UFC 333: Volkanovski vs. Evloev,2026-10-24,Abubakar Vagaev,Jacob Malkoun,Jacob Malkoun,0.582,weekly point-in-time logistic (data thru 2026-10-17),2026-10-21 03:41,Abubakar Vagaev,Decision - Unanimous,False
+UFC 333: Volkanovski vs. Evloev,2026-10-24,Bolaji Oki,Daniel Santos,Bolaji Oki,0.543,weekly point-in-time logistic (data thru 2026-10-17),2026-10-21 03:41,Daniel Santos,Decision - Unanimous,False
+UFC 333: Volkanovski vs. Evloev,2026-10-24,Kody Steele,Noah Gugnon,Noah Gugnon,0.697,weekly point-in-time logistic (data thru 2026-10-17),2026-10-21 03:41,Kody Steele,KO/TKO,False
+UFC 333: Volkanovski vs. Evloev,2026-10-24,Iasmin Lucindo,Nicolle Caliari,Iasmin Lucindo,0.745,weekly point-in-time logistic (data thru 2026-10-17),2026-10-21 03:41,Iasmin Lucindo,Decision - Unanimous,True
+UFC Fight Night: Moicano vs. Nolan,2026-10-31,Renato Moicano,Tom Nolan,Tom Nolan,0.681,weekly point-in-time logistic (data thru 2026-10-24),2026-10-28 14:15,,,
+UFC Fight Night: Moicano vs. Nolan,2026-10-31,Randy Brown,Jacobe Smith,Jacobe Smith,0.666,weekly point-in-time logistic (data thru 2026-10-24),2026-10-28 14:15,,,
+UFC Fight Night: Moicano vs. Nolan,2026-10-31,Ode Osbourne,Cody Durden,Ode Osbourne,0.519,weekly point-in-time logistic (data thru 2026-10-24),2026-10-28 14:15,,,
+UFC Fight Night: Moicano vs. Nolan,2026-10-31,Yana Santos,Luana Santos,Luana Santos,0.735,weekly point-in-time logistic (data thru 2026-10-24),2026-10-28 14:15,,,
+UFC Fight Night: Moicano vs. Nolan,2026-10-31,Jean-Paul Lebosnoyani,Farman Hasanov,Farman Hasanov,0.66,weekly point-in-time logistic (data thru 2026-10-24),2026-10-28 14:15,,,
+UFC Fight Night: Moicano vs. Nolan,2026-10-31,Francis Marshall,Dakota Hope,Francis Marshall,0.669,weekly point-in-time logistic (data thru 2026-10-24),2026-10-28 14:15,,,
+UFC Fight Night: Moicano vs. Nolan,2026-10-31,Rodrigo Sezinando,Theodor Berggren,Rodrigo Sezinando,0.546,weekly point-in-time logistic (data thru 2026-10-24),2026-10-28 14:15,,,
+UFC Fight Night: Moicano vs. Nolan,2026-10-31,Julian Erosa,JeongYeong Lee,JeongYeong Lee,0.618,weekly point-in-time logistic (data thru 2026-10-24),2026-10-28 14:15,,,
+UFC Fight Night: Moicano vs. Nolan,2026-10-31,Zachary Reese,Mickey Gall,Mickey Gall,0.503,weekly point-in-time logistic (data thru 2026-10-24),2026-10-28 14:15,,,
+UFC Fight Night: Moicano vs. Nolan,2026-10-31,Nick Klein,Joseph Kropschot,Nick Klein,0.609,weekly point-in-time logistic (data thru 2026-10-24),2026-10-28 14:15,,,
+UFC Fight Night: Moicano vs. Nolan,2026-10-31,Talita Alencar,Piera Rodriguez,Piera Rodriguez,0.59,weekly point-in-time logistic (data thru 2026-10-24),2026-10-28 14:15,,,
+UFC Fight Night: Moicano vs. Nolan,2026-10-31,Lucia Szabova,Tainara Lisboa,Lucia Szabova,0.51,weekly point-in-time logistic (data thru 2026-10-24),2026-10-28 14:15,,,

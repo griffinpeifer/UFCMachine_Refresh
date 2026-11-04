@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.griffinpeifer.ufcmachine.monthly</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/griffinpeifer/Documents/Personal_Projects/UFCMachine_Refresh/scripts/monthly_refresh.sh</string>
+    </array>
+
+    <!-- Runs at 03:00 on the 1st of each month, local time -->
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Day</key>
+        <integer>1</integer>
+        <key>Hour</key>
+        <integer>3</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <!-- If the Mac was asleep/off at 03:00, run as soon as it wakes -->
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StandardOutPath</key>
+    <string>/Users/griffinpeifer/Documents/Personal_Projects/UFCMachine_Refresh/logs/launchd-stdout.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/griffinpeifer/Documents/Personal_Projects/UFCMachine_Refresh/logs/launchd-stderr.log</string>
+
+    <!-- Make sure we have a reasonable PATH (venv activation is in the shell script) -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+</dict>
+</plist>
